@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Printable OpenCV calibration checkerboard.
+
+Config (inner corners): cols=9, rows=6
+Squares: (cols+1) x (rows+1) = 10 x 7
+Square size: 25.0 mm (print at 100% / actual size)
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="270mm"
+  height="215mm"
+  viewBox="0 0 270 215"
+  version="1.1">
+  <rect x="0" y="0" width="270" height="215" fill="white"/>
+
+  <!-- Board area: 10 x 7 squares, 25mm each; margin 10mm -->
+  <!-- Top-left corner of board -->
+  <!-- x0=10, y0=10 -->
+  <g id="checkerboard" shape-rendering="crispEdges">
+    <!-- Row 0 -->
+    <rect x="10" y="10" width="25" height="25" fill="black"/>
+    <rect x="60" y="10" width="25" height="25" fill="black"/>
+    <rect x="110" y="10" width="25" height="25" fill="black"/>
+    <rect x="160" y="10" width="25" height="25" fill="black"/>
+    <rect x="210" y="10" width="25" height="25" fill="black"/>
+
+    <!-- Row 1 -->
+    <rect x="35" y="35" width="25" height="25" fill="black"/>
+    <rect x="85" y="35" width="25" height="25" fill="black"/>
+    <rect x="135" y="35" width="25" height="25" fill="black"/>
+    <rect x="185" y="35" width="25" height="25" fill="black"/>
+    <rect x="235" y="35" width="25" height="25" fill="black"/>
+
+    <!-- Row 2 -->
+    <rect x="10" y="60" width="25" height="25" fill="black"/>
+    <rect x="60" y="60" width="25" height="25" fill="black"/>
+    <rect x="110" y="60" width="25" height="25" fill="black"/>
+    <rect x="160" y="60" width="25" height="25" fill="black"/>
+    <rect x="210" y="60" width="25" height="25" fill="black"/>
+
+    <!-- Row 3 -->
+    <rect x="35" y="85" width="25" height="25" fill="black"/>
+    <rect x="85" y="85" width="25" height="25" fill="black"/>
+    <rect x="135" y="85" width="25" height="25" fill="black"/>
+    <rect x="185" y="85" width="25" height="25" fill="black"/>
+    <rect x="235" y="85" width="25" height="25" fill="black"/>
+
+    <!-- Row 4 -->
+    <rect x="10" y="110" width="25" height="25" fill="black"/>
+    <rect x="60" y="110" width="25" height="25" fill="black"/>
+    <rect x="110" y="110" width="25" height="25" fill="black"/>
+    <rect x="160" y="110" width="25" height="25" fill="black"/>
+    <rect x="210" y="110" width="25" height="25" fill="black"/>
+
+    <!-- Row 5 -->
+    <rect x="35" y="135" width="25" height="25" fill="black"/>
+    <rect x="85" y="135" width="25" height="25" fill="black"/>
+    <rect x="135" y="135" width="25" height="25" fill="black"/>
+    <rect x="185" y="135" width="25" height="25" fill="black"/>
+    <rect x="235" y="135" width="25" height="25" fill="black"/>
+
+    <!-- Row 6 -->
+    <rect x="10" y="160" width="25" height="25" fill="black"/>
+    <rect x="60" y="160" width="25" height="25" fill="black"/>
+    <rect x="110" y="160" width="25" height="25" fill="black"/>
+    <rect x="160" y="160" width="25" height="25" fill="black"/>
+    <rect x="210" y="160" width="25" height="25" fill="black"/>
+  </g>
+
+  <!-- Label -->
+  <text x="135" y="205" text-anchor="middle" font-family="DejaVu Sans, Arial, sans-serif" font-size="8">
+    10 x 7 squares (9 x 6 inner corners) - 25.0mm square_size_mm
+  </text>
+</svg>

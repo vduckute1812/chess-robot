@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Vision: main",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.main",
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/env/bin/python",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Vision: calibrate camera",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "src.calibrate_camera",
+      "cwd": "${workspaceFolder}",
+      "python": "${workspaceFolder}/env/bin/python",
+      "console": "integratedTerminal"
+    }
+  ]
+}

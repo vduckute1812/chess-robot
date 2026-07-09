@@ -1,0 +1,41 @@
+camera:
+  device_id: 2
+  device_path: /dev/video2
+  width: 1280
+  height: 720
+  fps: 30
+calibration:
+  enabled: true
+  min_samples: 15
+  checkerboard:
+    cols: 9
+    rows: 6
+    square_size_mm: 25.0
+  camera_matrix:
+  - - 722.7090771913913
+    - 0.0
+    - 319.9169103121255
+  - - 0.0
+    - 722.7500333990108
+    - 248.9318034947435
+  - - 0.0
+    - 0.0
+    - 1.0
+  dist_coeffs:
+  - 0.08006964473140285
+  - -0.6963780855218505
+  - 0.00415671033238526
+  - 0.0032990387162147336
+  - 1.1192029820816114
+  reprojection_error: 0.27969735697512393
+  image_width: 640
+  image_height: 480
+board:
+  output_size: 800
+  grid_size: 8
+  manual_corners: []
+detection:
+  canny_low: 50
+  canny_high: 150
+  blur_kernel: 5
+  min_contour_area: 5000
