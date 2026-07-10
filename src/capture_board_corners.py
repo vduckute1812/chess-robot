@@ -1,4 +1,4 @@
-"""Main entry point for testing the Phase 1 vision system."""
+"""Interactive board-corner capture workflow."""
 
 from __future__ import annotations
 
@@ -8,13 +8,13 @@ from pathlib import Path
 if __package__ is None:
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from src.apps.capture_corners import run_capture_corners_loop
 from src.apps.cli import parse_config_args
-from src.apps.vision import run_vision_loop
 
 
 def main() -> None:
-    args = parse_config_args("Chess robot vision system test loop")
-    raise SystemExit(run_vision_loop(args.config))
+    args = parse_config_args("Capture chessboard corners and save them to config")
+    raise SystemExit(run_capture_corners_loop(args.config))
 
 
 if __name__ == "__main__":

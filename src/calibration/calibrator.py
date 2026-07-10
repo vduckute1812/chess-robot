@@ -48,11 +48,16 @@ class CameraCalibrator:
     def is_calibrated(self) -> bool:
         return self.camera_matrix is not None and self.dist_coeffs is not None
 
-    def find_checkerboard(self, frame: np.ndarray) -> tuple[bool, np.ndarray | None]:
-        return find_checkerboard_corners(frame, self._pattern_size)
+    def find_checkerboard(
+        self,
+        frame: np.ndarray,
+        *,
+        robust: bool = False,
+    ) -> tuple[bool, np.ndarray | None]:
+        return find_checkerboard_corners(frame, self._pattern_size, robust=robust)
 
     def add_sample(self, frame: np.ndarray) -> bool:
-        found, corners = self.find_checkerboard(frame)
+        found, corners = self.find_checkerboard(frame, robust=True)
         if not found or corners is None:
             return False
 
@@ -91,10 +96,28 @@ class CameraCalibrator:
         return camera_matrix, dist_coeffs, float(error)
 
     def draw_overlay(self, frame: np.ndarray) -> np.ndarray:
-        found, corners = self.find_checkerboard(frame)
+        found, corners = self.find_checkerboard(frame, robust=False)
         if found and corners is not None:
-            return draw_checkerboard_overlay(frame, self._pattern_size, corners)
-        return frame.copy()
+            overlay = draw_checkerboard_overlay(frame, self._pattern_size, corners)
+        else:
+            overlay = frame.copy()
+
+        ready = self.sample_count >= self.min_samples
+        status = (
+            f"Samples: {self.sample_count}/{self.min_samples}  "
+            f"{'READY' if ready else 'collect more'}"
+        )
+        cv2.putText(
+            overlay,
+            status,
+            (20, 40),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.8,
+            (0, 255, 0),
+            2,
+            cv2.LINE_AA,
+        )
+        return overlay
 
     def save_to_config(self, config_path: str | Path | None = None) -> Path:
         if not self.is_calibrated or self._image_size is None:

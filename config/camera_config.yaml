@@ -35,6 +35,9 @@ board:
   grid_size: 8
   manual_corners: []
 detection:
+  prefer_chessboard: true
+  # Inner-corner pattern; defaults to (grid_size-1, grid_size-1) when omitted.
+  # pattern_size: [7, 7]
   canny_low: 50
   canny_high: 150
   blur_kernel: 5

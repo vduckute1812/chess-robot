@@ -89,26 +89,20 @@ def list_devices(max_index: int = 10) -> list[dict[str, Any]]:
             }
         )
 
-    with suppress_opencv_logs():
-        if sys.platform.startswith("linux"):
-            for path in sorted(glob.glob("/dev/video*")):
-                cap = cv2.VideoCapture(path, cv2.CAP_V4L2)
-                if not cap.isOpened():
-                    cap.release()
-                    continue
-                ok, frame = cap.read()
-                if ok and frame is not None:
-                    record(path, frame)
-                cap.release()
+    candidates: list[int | str] = []
+    if sys.platform.startswith("linux"):
+        candidates.extend(sorted(glob.glob("/dev/video*")))
+    candidates.extend(range(max_index))
 
-        for index in range(max_index):
-            cap = create_capture(index)
+    with suppress_opencv_logs():
+        for device in candidates:
+            cap = create_capture(device)
             if not cap.isOpened():
                 cap.release()
                 continue
             ok, frame = cap.read()
             if ok and frame is not None:
-                record(index, frame)
+                record(device, frame)
             cap.release()
 
     return devices

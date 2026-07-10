@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 
 import cv2
 
+from src.apps.runtime import camera_session, read_frame
 from src.calibration import CameraCalibrator
 from src.camera import ChessCamera
 from src.config import DEFAULT_CONFIG_PATH
@@ -26,66 +26,49 @@ def print_controls(calibrator: CameraCalibrator) -> None:
 
 
 def run_calibration_loop(config_path: Path = DEFAULT_CONFIG_PATH) -> int:
-    camera = ChessCamera(config_path)
     calibrator = CameraCalibrator(config_path)
 
     try:
-        camera.open()
-    except (CameraError, FileNotFoundError) as exc:
-        print(f"Camera error: {exc}", file=sys.stderr)
+        with camera_session(config_path) as camera:
+            print_controls(calibrator)
+            return _calibration_loop(camera, calibrator, config_path)
+    except (CameraError, FileNotFoundError):
         return 1
 
-    print_controls(calibrator)
 
-    try:
-        while True:
+def _calibration_loop(
+    camera: ChessCamera,
+    calibrator: CameraCalibrator,
+    config_path: Path,
+) -> int:
+    while True:
+        frame = read_frame(camera, apply_undistort=False)
+        if frame is None:
+            break
+
+        overlay = calibrator.draw_overlay(frame)
+        cv2.imshow(WINDOW, overlay)
+
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord("q"):
+            break
+        if key == ord("r"):
+            calibrator.reset_samples()
+            print("Reset calibration samples.")
+        if key == ord(" "):
+            if calibrator.add_sample(frame):
+                print(f"Captured sample {calibrator.sample_count}.")
+            else:
+                print("Checkerboard not detected. Adjust board and try again.")
+        if key == ord("c"):
             try:
-                frame = camera.read(apply_undistort=False)
-            except CameraError as exc:
-                print(f"Frame read error: {exc}", file=sys.stderr)
+                _matrix, _dist, error = calibrator.calibrate()
+                saved_path = calibrator.save_to_config(config_path)
+                print(f"Calibration saved to {saved_path}")
+                print(f"Reprojection error: {error:.4f} pixels")
+                print("Restart the vision loop to use undistorted frames.")
                 break
-
-            overlay = calibrator.draw_overlay(frame)
-            status = (
-                f"Samples: {calibrator.sample_count}/{calibrator.min_samples}  "
-                f"{'READY' if calibrator.sample_count >= calibrator.min_samples else 'collect more'}"
-            )
-            cv2.putText(
-                overlay,
-                status,
-                (20, 40),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.8,
-                (0, 255, 0),
-                2,
-                cv2.LINE_AA,
-            )
-            cv2.imshow(WINDOW, overlay)
-
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord("q"):
-                break
-            if key == ord("r"):
-                calibrator.reset_samples()
-                print("Reset calibration samples.")
-            if key == ord(" "):
-                if calibrator.add_sample(frame):
-                    print(f"Captured sample {calibrator.sample_count}.")
-                else:
-                    print("Checkerboard not detected. Adjust board and try again.")
-            if key == ord("c"):
-                try:
-                    _matrix, _dist, error = calibrator.calibrate()
-                    saved_path = calibrator.save_to_config(config_path)
-                    print(f"Calibration saved to {saved_path}")
-                    print(f"Reprojection error: {error:.4f} pixels")
-                    print("Restart the vision loop to use undistorted frames.")
-                    break
-                except CalibrationError as exc:
-                    print(f"Calibration error: {exc}")
-
-    finally:
-        camera.release()
-        cv2.destroyAllWindows()
+            except CalibrationError as exc:
+                print(f"Calibration error: {exc}")
 
     return 0

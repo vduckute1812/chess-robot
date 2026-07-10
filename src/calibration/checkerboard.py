@@ -5,19 +5,19 @@ from __future__ import annotations
 import cv2
 import numpy as np
 
+from src.utils.chessboard import find_inner_corners
+
 
 def find_checkerboard_corners(
     frame: np.ndarray,
     pattern_size: tuple[int, int],
+    *,
+    robust: bool = True,
 ) -> tuple[bool, np.ndarray | None]:
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    found, corners = cv2.findChessboardCorners(gray, pattern_size, None)
-    if not found or corners is None:
+    corners = find_inner_corners(frame, pattern_size, robust=robust)
+    if corners is None:
         return False, None
-
-    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-    refined = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
-    return True, refined
+    return True, corners
 
 
 def draw_checkerboard_overlay(
