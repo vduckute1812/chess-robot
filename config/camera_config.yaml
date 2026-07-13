@@ -1,8 +1,8 @@
 camera:
-  device_id: 2
-  device_path: /dev/video2
-  width: 1280
-  height: 720
+  device_id: 0
+  device_path: /dev/video0
+  width: 1920
+  height: 1080
   fps: 30
 calibration:
   enabled: true
@@ -12,33 +12,61 @@ calibration:
     rows: 6
     square_size_mm: 25.0
   camera_matrix:
-  - - 722.7090771913913
-    - 0.0
-    - 319.9169103121255
-  - - 0.0
-    - 722.7500333990108
-    - 248.9318034947435
-  - - 0.0
-    - 0.0
-    - 1.0
+    -
+      - 722.7090771913913
+      - 0.0
+      - 319.9169103121255
+    -
+      - 0.0
+      - 722.7500333990108
+      - 248.9318034947435
+    -
+      - 0.0
+      - 0.0
+      - 1.0
   dist_coeffs:
-  - 0.08006964473140285
-  - -0.6963780855218505
-  - 0.00415671033238526
-  - 0.0032990387162147336
-  - 1.1192029820816114
+    - 0.08006964473140285
+    - -0.6963780855218505
+    - 0.00415671033238526
+    - 0.0032990387162147336
+    - 1.1192029820816114
   reprojection_error: 0.27969735697512393
   image_width: 640
   image_height: 480
 board:
-  output_size: 800
+  output_size: 1600
   grid_size: 8
-  manual_corners: []
+  manual_corners:
+    -
+      - 106.72
+      - 63.329999999999998
+    -
+      - 471.88999999999999
+      - 83.180000000000007
+    -
+      - 448.33999999999997
+      - 443.83999999999997
+    -
+      - 92.969999999999999
+      - 428.07999999999998
 detection:
   prefer_chessboard: true
-  # Inner-corner pattern; defaults to (grid_size-1, grid_size-1) when omitted.
-  # pattern_size: [7, 7]
   canny_low: 50
   canny_high: 150
   blur_kernel: 5
   min_contour_area: 5000
+pieces:
+  method: classical
+  center_roi_ratio: 0.45
+  empty_reference_path: data/empty_board.png
+  illumination_normalize: true
+  occupancy_threshold: 8.0
+  adaptive_stddev_mult: 2.5
+  pixel_diff_threshold: 12.0
+  occupied_pixel_ratio: 0.12
+  texture_threshold: 16.0
+  white_brightness_delta: 12.0
+  blur_kernel: 5
+  confirm_frames: 4
+  empty_adapt_alpha: 0.03
+  empty_adapt_after_frames: 45

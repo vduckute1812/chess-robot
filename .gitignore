@@ -1,5 +1,11 @@
 env/
+cpp-env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+build/
+cmake-build-*/
+compile_commands.json
+.cache/
+third_party/
