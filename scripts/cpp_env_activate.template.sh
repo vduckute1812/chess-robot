@@ -1,4 +1,4 @@
-# Activate chess-robot C++ environment (like: source env/bin/activate)
+# Activate chess-robot C++ environment
 # Usage: source cpp-env/activate.sh
 
 _CHESS_ROBOT_ENV_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

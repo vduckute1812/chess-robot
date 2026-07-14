@@ -8,7 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(FetchContent)
 
-# Prefer project-local cpp-env (created by scripts/setup_cpp_env.sh), like Python's env/.
+# Prefer project-local cpp-env (created by scripts/setup_cpp_env.sh).
 set(_chess_env_prefix "")
 if(DEFINED ENV{CHESS_ROBOT_PREFIX} AND EXISTS "$ENV{CHESS_ROBOT_PREFIX}")
   set(_chess_env_prefix "$ENV{CHESS_ROBOT_PREFIX}")
@@ -121,7 +121,6 @@ add_library(chess_robot
   src/board/warp.cpp
   src/board/detector.cpp
   src/pieces/reference.cpp
-  src/pieces/classifier.cpp
   src/pieces/occupancy.cpp
 )
 

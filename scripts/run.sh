@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-# Auto-activate project C++ env (like working inside a Python venv).
+# Auto-activate project C++ env.
 if [[ -z "${CHESS_ROBOT_ENV:-}" && -f "$ROOT/cpp-env/activate.sh" ]]; then
   # shellcheck disable=SC1091
   source "$ROOT/cpp-env/activate.sh"
@@ -49,7 +49,7 @@ EOF
 
 deps_hint() {
   cat >&2 <<EOF
-Set up the C++ environment (like Python venv), then rebuild:
+Set up the C++ environment, then rebuild:
   ./scripts/setup_cpp_env.sh
   source cpp-env/activate.sh
   ./scripts/run.sh rebuild

@@ -2,8 +2,6 @@
 
 We are building an AI-powered chess-playing robot arm. This document is the source of truth for **Phase 1: Camera and Vision System**, implemented in **C++**.
 
-The previous Python prototype is archived under [`python/`](python/) for reference.
-
 ---
 
 ## Project Overview & Architecture
@@ -21,7 +19,7 @@ The previous Python prototype is archived under [`python/`](python/) for referen
 * **Language:** C++17
 * **Build:** CMake 3.16+
 * **Libraries:** OpenCV 4.x (`core`, `imgproc`, `calib3d`, `highgui`, `videoio`), yaml-cpp (system package or FetchContent)
-* **Config:** [`config/camera_config.yaml`](config/camera_config.yaml) (shared schema with the Python archive)
+* **Config:** [`config/camera_config.yaml`](config/camera_config.yaml)
 * **Optional AI vision (later):** ONNX Runtime / OpenCV DNN for piece classification if classical CV is not enough
 
 ### 2. File Structure
@@ -50,7 +48,6 @@ chess-robot/
 │   │   └── warp.hpp
 │   ├── pieces/
 │   │   ├── occupancy.hpp        # PieceOccupancyDetector facade
-│   │   ├── classifier.hpp       # Empty / Occupied
 │   │   └── reference.hpp        # Empty-board capture + center ROI
 │   └── utils/
 │       └── chessboard.hpp
@@ -65,11 +62,10 @@ chess-robot/
 ├── data/
 │   └── empty_board.png          # Optional empty-board reference (gitignored)
 ├── scripts/
-│   ├── setup_cpp_env.sh         # Create cpp-env/ (like python -m venv)
+│   ├── setup_cpp_env.sh         # Create cpp-env/
 │   ├── run.sh                   # Build/run apps (auto-activates cpp-env)
 │   └── cpp_env_activate.template.sh
 ├── cpp-env/                     # Local C++ env (gitignored; after setup)
-├── python/                      # Archived Python prototype
 ├── assets/
 └── camera_development.md
 ```
@@ -97,13 +93,13 @@ chess-robot/
 
 ## Build & Quickstart
 
-### C++ environment (like Python `venv`)
+### C++ environment
 
-| Python | C++ |
-|--------|-----|
-| `python3 -m venv env` | `./scripts/setup_cpp_env.sh` |
-| `source env/bin/activate` | `source cpp-env/activate.sh` |
-| `deactivate` | `deactivate_chess_cpp` |
+```bash
+./scripts/setup_cpp_env.sh
+source cpp-env/activate.sh
+# later: deactivate_chess_cpp
+```
 
 ```bash
 sudo apt install build-essential cmake pkg-config git libopencv-dev
@@ -223,11 +219,3 @@ Diff consecutive occupancy grids → UCI moves; use a C++ chess rules library fo
 | 4 Grid segmentation | Done (C++) |
 | 5 Piece / occupancy detection | Done (classical; types later) |
 | 6 Move detection | **Next** |
-
-### Python archive
-
-Historical Python entry points (for reference only):
-
-```bash
-cd python && ../env/bin/python -m src.main
-```

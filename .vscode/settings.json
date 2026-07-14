@@ -1,7 +1,1 @@
-{
-  "python.defaultInterpreterPath": "${workspaceFolder}/env/bin/python",
-  "python.terminal.activateEnvironment": true,
-  "terminal.integrated.env.linux": {
-    "PYTHONPATH": "${workspaceFolder}"
-  }
-}
+{}

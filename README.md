@@ -2,16 +2,7 @@
 
 Phase 1 vision stack (camera, calibration, board warp, piece occupancy). Full spec: [camera_development.md](camera_development.md).
 
-The previous Python prototype is under [`python/`](python/).
-
-## Environment setup (like Python `venv`)
-
-| Python | C++ |
-|--------|-----|
-| `python3 -m venv env` | `./scripts/setup_cpp_env.sh` |
-| `source env/bin/activate` | `source cpp-env/activate.sh` |
-| `pip install -r requirements.txt` | (deps installed into `cpp-env/prefix`) |
-| `deactivate` | `deactivate_chess_cpp` |
+## Environment setup
 
 ```bash
 # Build tools (once)

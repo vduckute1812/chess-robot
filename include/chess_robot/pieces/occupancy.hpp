@@ -7,11 +7,15 @@
 
 #include <opencv2/core.hpp>
 
-#include "chess_robot/pieces/classifier.hpp"
-
 namespace chess_robot {
 
 namespace fs = std::filesystem;
+
+/** Per-square occupancy only (no white/black side). */
+enum class SquareState {
+  Empty = 0,
+  Occupied = 1,
+};
 
 using OccupancyGrid = std::vector<std::vector<SquareState>>;
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create a project-local C++ environment (Python venv equivalent).
+# Create a project-local C++ environment.
 #
 #   ./scripts/setup_cpp_env.sh
 #   source cpp-env/activate.sh
@@ -20,7 +20,7 @@ usage() {
   cat <<EOF
 Usage: $(basename "$0") [options]
 
-Create cpp-env/ — a local C++ toolchain prefix (like Python's env/).
+Create cpp-env/ — a local C++ toolchain prefix.
 
 Options:
   --from-source   Build OpenCV into cpp-env (slow; if apt OpenCV is unavailable)
@@ -159,7 +159,7 @@ write_activate "$OPENCV_MODE"
 cat > "$ENV_DIR/README.md" <<EOF
 # cpp-env
 
-Local C++ environment for chess-robot (analogous to Python \`env/\`).
+Local C++ environment for chess-robot.
 
 \`\`\`bash
 source cpp-env/activate.sh
